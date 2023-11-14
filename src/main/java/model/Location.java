@@ -1,4 +1,4 @@
 package model;
 
-public class Location {
+public record Location(String name, Double latitude, Double longitude) {
 }
