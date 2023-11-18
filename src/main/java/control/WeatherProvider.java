@@ -1,8 +1,6 @@
 package control;
 
-import model.Location;
-import model.Weather;
-
+import model.*;
 import java.time.Instant;
 
 public interface WeatherProvider {

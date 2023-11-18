@@ -1,8 +1,14 @@
+import control.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Scanner;
 
 
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Welcome to the WeatherApp!\nPlease, enter the name of the API key file (.txt): ");
@@ -12,6 +18,13 @@ public class Main {
         String locationsFileLocation = scanner.nextLine();
 
         scanner.close();
+
+        WeatherProvider weatherProvider = new OpenWeatherProvider(apiKeyLocation);
+        WeatherStorage weatherStorage = new SQLiteWeatherStorage(locationsFileLocation);
+
+        WeatherController controller = new WeatherController(weatherProvider, weatherStorage, locationsFileLocation);
+        controller.configure(5, 6);
+        controller.execute();
 
         try {
             Thread.sleep(Long.MAX_VALUE);

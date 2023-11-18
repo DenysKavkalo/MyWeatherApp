@@ -1,12 +1,12 @@
 package control;
 
-import model.Location;
-import model.Weather;
-
+import model.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalTime;
+
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -15,14 +15,14 @@ import java.util.TimerTask;
 public class WeatherController {
     private final ArrayList<Location> locations;
     private final WeatherProvider weatherProvider;
-    private final SQLiteWeatherStorage weatherStore;
+    private final WeatherStorage weatherStorage;
     private WeatherTask weatherTask;
     private long period;
 
-    public WeatherController(WeatherProvider weatherProvider, SQLiteWeatherStorage weatherStore, String locationsFileLocation) {
+    public WeatherController(WeatherProvider weatherProvider, WeatherStorage weatherStorage, String locationsFileLocation) {
         this.locations = loadLocationsFromFile(locationsFileLocation);
         this.weatherProvider = weatherProvider;
-        this.weatherStore = weatherStore;
+        this.weatherStorage = weatherStorage;
     }
 
     public static ArrayList<Location> loadLocationsFromFile(String filePath) {
@@ -66,17 +66,20 @@ public class WeatherController {
         @Override
         public void run() {
             Instant now = Instant.now();
+            LocalTime noon = LocalTime.of(12, 0);
 
             for (Location location : locations) {
-                Instant mediodia = now.truncatedTo(ChronoUnit.DAYS).plus(12, ChronoUnit.HOURS);
+                Instant mediodia = now.truncatedTo(ChronoUnit.DAYS).plus(noon.getHour(), ChronoUnit.HOURS);
+
+                int numDaysToAdd = (now.toEpochMilli() < mediodia.toEpochMilli()) ? 0 : 1;
 
                 for (int i = 0; i <= numDays; i++) {
-                    Instant targetInstant = mediodia.isBefore(now) ? mediodia.plus(i, ChronoUnit.DAYS) : mediodia.plus(i + 1, ChronoUnit.DAYS);
+                    Instant targetInstant = mediodia.plus(i + numDaysToAdd, ChronoUnit.DAYS);
 
                     Weather weather = weatherProvider.get(location, targetInstant);
 
                     if (weather != null) {
-                        weatherStore.store(weather);
+                        weatherStorage.store(weather);
                     }
                 }
             }

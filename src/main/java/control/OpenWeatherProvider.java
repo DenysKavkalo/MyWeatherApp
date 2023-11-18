@@ -4,11 +4,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import model.Location;
-import model.Weather;
+import model.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -85,6 +83,7 @@ public class OpenWeatherProvider implements WeatherProvider {
         try (BufferedReader apiKeyReader = new BufferedReader(new FileReader(apiKeyLocation))) {
             return apiKeyReader.readLine();
         } catch (IOException e) {
+            System.err.println("Error reading API key from file: " + apiKeyLocation);
             e.printStackTrace();
             return null;
         }
