@@ -1,4 +1,4 @@
-package model;
+package predictionprovidermc.model;
 
 public record Location(String name, Double latitude, Double longitude) {
 }

@@ -1,7 +1,7 @@
-package model;
+package predictionprovidermc.model;
 
 import java.time.Instant;
 
 public record Weather(Float temp, Float rain, Integer humidity, Integer clouds, Float windSpeed, Location location,
-                      Instant timeStamp) {
+                      Instant predicttionTime, Instant ts, String ss) {
 }

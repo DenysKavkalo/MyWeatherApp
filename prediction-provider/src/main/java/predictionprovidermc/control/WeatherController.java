@@ -1,6 +1,8 @@
-package control;
+package predictionprovidermc.control;
 
-import model.*;
+import predictionprovidermc.model.Location;
+import predictionprovidermc.model.Weather;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -31,17 +33,22 @@ public class WeatherController {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("\t");
-                String name = parts[0];
-                double latitude = Double.parseDouble(parts[1]);
-                double longitude = Double.parseDouble(parts[2]);
-                Location location = new Location(name, latitude, longitude);
-                locationList.add(location);
+                if (parts.length >= 3) { // Verificar si hay suficientes partes
+                    String name = parts[0];
+                    double latitude = Double.parseDouble(parts[1]);
+                    double longitude = Double.parseDouble(parts[2]);
+                    Location location = new Location(name, latitude, longitude);
+                    locationList.add(location);
+                } else {
+                    System.err.println("La línea no tiene suficientes partes: " + line);
+                }
             }
         } catch (IOException | NumberFormatException e) {
             e.printStackTrace();
         }
         return locationList;
     }
+
 
     public void configure(int numDays, int hoursPeriodicity) {
         long hoursInMillis = (long) hoursPeriodicity * 60 * 60 * 1000;
@@ -79,7 +86,7 @@ public class WeatherController {
                     Weather weather = weatherProvider.get(location, targetInstant);
 
                     if (weather != null) {
-                        weatherStorage.store(weather);
+                        weatherStorage.publish(weather);
                     }
                 }
             }
