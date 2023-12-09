@@ -7,11 +7,12 @@ public class Main {
         System.out.print("Welcome to the WeatherApp!\n");
         String apiKeyLocation = args[0];
         String locationsFileLocation = args[1];
+        String topicName = args[2];
 
         WeatherProvider weatherProvider = new OpenWeatherProvider(apiKeyLocation);
-        JMSWeatherStorage jmsWeatherStorage = new JMSWeatherStorage();
+        WeatherStorage weatherStorage = new WeatherPublisher(topicName);
 
-        WeatherController controller = new WeatherController(weatherProvider, jmsWeatherStorage, locationsFileLocation);
+        WeatherController controller = new WeatherController(weatherProvider, weatherStorage, locationsFileLocation);
         controller.configure(5, 6);
         controller.execute();
 

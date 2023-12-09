@@ -2,13 +2,11 @@ package predictionprovidermc.control;
 
 import predictionprovidermc.model.Location;
 import predictionprovidermc.model.Weather;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalTime;
-
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -33,7 +31,7 @@ public class WeatherController {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("\t");
-                if (parts.length >= 3) { // Verificar si hay suficientes partes
+                if (parts.length >= 3) {
                     String name = parts[0];
                     double latitude = Double.parseDouble(parts[1]);
                     double longitude = Double.parseDouble(parts[2]);
@@ -49,7 +47,6 @@ public class WeatherController {
         return locationList;
     }
 
-
     public void configure(int numDays, int hoursPeriodicity) {
         long hoursInMillis = (long) hoursPeriodicity * 60 * 60 * 1000;
 
@@ -59,7 +56,6 @@ public class WeatherController {
 
     public void execute() {
         Timer timer = new Timer(true);
-
         timer.schedule(weatherTask, 0, period);
     }
 
