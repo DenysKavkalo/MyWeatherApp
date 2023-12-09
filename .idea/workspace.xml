@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57777aa1-4213-4bae-b536-210a479dc270" name="Changes" comment="Created a publisher">
-      <change afterPath="$PROJECT_DIR$/event-store-builder/src/main/java/eventstoremc/Main.java" afterDir="false" />
+    <list default="true" id="57777aa1-4213-4bae-b536-210a479dc270" name="Changes" comment="Created Main class for storing events">
       <change afterPath="$PROJECT_DIR$/event-store-builder/src/main/java/eventstoremc/control/EventStoreBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/control/WeatherPublisher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-store-builder/src/main/java/control/EventStorage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/control/InstantTypeAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/control/InstantTypeAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/control/JMSWeatherStorage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/control/WeatherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/control/WeatherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/model/Weather.java" beforeDir="false" afterPath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/model/Weather.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +154,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701909694209</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Created Main class for storing events">
+      <option name="closed" value="true" />
+      <created>1702148127437</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1702148127437</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,7 +191,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="branch events" />
     <MESSAGE value="Created a publisher" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created a publisher" />
+    <MESSAGE value="Created Main class for storing events" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created Main class for storing events" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
