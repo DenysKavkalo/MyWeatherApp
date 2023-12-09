@@ -20,5 +20,60 @@ public class EventStoreBuilder {
         this.eventStoreDirectory = eventStoreDirectory;
     }
 
-    
+    public void start() {
+        try {
+            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
+            Connection connection = connectionFactory.createConnection();
+            connection.start();
+
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            Topic topic = session.createTopic(topicName);
+
+            MessageConsumer consumer = session.createConsumer(topic);
+
+            consumer.setMessageListener(message -> {
+                if (message instanceof TextMessage) {
+                    try {
+                        TextMessage textMessage = (TextMessage) message;
+                        String jsonEvent = textMessage.getText();
+
+                        storeEvent(jsonEvent);
+                    } catch (JMSException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void storeEvent(String jsonEvent) throws IOException {
+        Instant eventTimestamp = Instant.now();
+        LocalDate eventDate = Instant.ofEpochMilli(eventTimestamp.toEpochMilli())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        String formattedDate = eventDate.toString().replace("-", "");
+
+        String eventStorePath = Paths.get(eventStoreDirectory, topicName, formattedDate + ".events").toString();
+
+        createDirectories(eventStorePath);
+
+        try (FileWriter fileWriter = new FileWriter(eventStorePath, true)) {
+            fileWriter.write(jsonEvent);
+            fileWriter.write("\n");
+        }
+    }
+
+    private void createDirectories(String path) {
+        Path directoryPath = Paths.get(path).getParent();
+
+        if (directoryPath != null) {
+            try {
+                Files.createDirectories(directoryPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
