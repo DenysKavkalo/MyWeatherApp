@@ -55,7 +55,7 @@ public class EventStoreBuilder {
                 .toLocalDate();
         String formattedDate = eventDate.toString().replace("-", "");
 
-        String eventStorePath = Paths.get(eventStoreDirectory, topicName, formattedDate + ".events").toString();
+        String eventStorePath = Paths.get("MyWeatherApp",eventStoreDirectory, topicName, formattedDate + ".events").toString();
 
         createDirectories(eventStorePath);
 
