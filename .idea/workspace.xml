@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57777aa1-4213-4bae-b536-210a479dc270" name="Changes" comment="Created EventStoreBuilder class">
-      <change beforePath="$PROJECT_DIR$/event-store-builder/src/main/java/eventstoremc/control/EventStoreBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/event-store-builder/src/main/java/eventstoremc/control/EventStoreBuilder.java" afterDir="false" />
+    <list default="true" id="57777aa1-4213-4bae-b536-210a479dc270" name="Changes" comment="Created subscriber and storing event logic">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/event-store-builder/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/event-store-builder/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prediction-provider/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/prediction-provider/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,33 +53,52 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.EventStoreBuilder.executor&quot;: &quot;Run&quot;,
-    &quot;Application.EventStoreSubscriber.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainEventStore.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainProvider.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Publisher.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Subscriber.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;events__branch&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Usuario/IdeaProjects/Proyectos DACD&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.EventStoreBuilder.executor": "Run",
+    "Application.EventStoreSubscriber.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.MainEventStore.executor": "Run",
+    "Application.MainProvider.executor": "Run",
+    "Application.Publisher.executor": "Run",
+    "Application.Subscriber.executor": "Run",
+    "Maven.event-store-builder [clean].executor": "Run",
+    "Maven.event-store-builder [compile].executor": "Run",
+    "Maven.event-store-builder [install].executor": "Run",
+    "Maven.event-store-builder [package].executor": "Run",
+    "Maven.event-store-builder [site].executor": "Run",
+    "Maven.event-store-builder [test].executor": "Run",
+    "Maven.event-store-builder [validate].executor": "Run",
+    "Maven.event-store-builder [verify].executor": "Run",
+    "Maven.prediction-provider [clean].executor": "Run",
+    "Maven.prediction-provider [compile].executor": "Run",
+    "Maven.prediction-provider [deploy].executor": "Run",
+    "Maven.prediction-provider [install].executor": "Run",
+    "Maven.prediction-provider [package].executor": "Run",
+    "Maven.prediction-provider [site].executor": "Run",
+    "Maven.prediction-provider [test].executor": "Run",
+    "Maven.prediction-provider [validate].executor": "Run",
+    "Maven.prediction-provider [verify].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "events__branch",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "17",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Usuario/IdeaProjects/Proyectos DACD",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Usuario\Documents\GitHub\MyWeatherApp\prediction-provider" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Usuario\Documents\GitHub\MyWeatherApp\prediction-provider\target" />
       <recent name="C:\Users\Usuario\Documents\GitHub\MyWeatherApp\prediction-provider\src\main\resources" />
     </key>
   </component>
@@ -170,7 +191,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702148405057</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Created subscriber and storing event logic">
+      <option name="closed" value="true" />
+      <created>1702148672261</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1702148672261</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -201,7 +230,8 @@
     <MESSAGE value="Created a publisher" />
     <MESSAGE value="Created Main class for storing events" />
     <MESSAGE value="Created EventStoreBuilder class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created EventStoreBuilder class" />
+    <MESSAGE value="Created subscriber and storing event logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created subscriber and storing event logic" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
