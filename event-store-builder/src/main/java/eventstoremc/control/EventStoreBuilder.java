@@ -1,6 +1,10 @@
 package eventstoremc.control;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.activemq.ActiveMQConnectionFactory;
+import predictionprovidermc.model.Weather;
+import predictionprovidermc.control.InstantTypeAdapter;
 import javax.jms.*;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -49,13 +53,18 @@ public class EventStoreBuilder {
     }
 
     private void storeEvent(String jsonEvent) throws IOException {
-        Instant eventTimestamp = Instant.now();
-        LocalDate eventDate = Instant.ofEpochMilli(eventTimestamp.toEpochMilli())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Instant.class, new InstantTypeAdapter())
+                .create();
+
+        Weather weatherEvent = gson.fromJson(jsonEvent, Weather.class);
+
+        String ss = weatherEvent.ss();
+        Instant eventTimestamp = weatherEvent.ts();
+        LocalDate eventDate = eventTimestamp.atZone(ZoneId.systemDefault()).toLocalDate();
         String formattedDate = eventDate.toString().replace("-", "");
 
-        String eventStorePath = Paths.get("MyWeatherApp",eventStoreDirectory, topicName, formattedDate + ".events").toString();
+        String eventStorePath = Paths.get(eventStoreDirectory, topicName, ss, formattedDate + ".events").toString();
 
         createDirectories(eventStorePath);
 

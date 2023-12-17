@@ -18,7 +18,7 @@ public class OpenWeatherProvider implements WeatherProvider {
     private static final String BASE_URL =
             "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={apiKey}&units=metric";
     private final String apiKey;
-    private static final String ss = "prediction_provider";
+    private static final String ss = "prediction-provider";
 
     public OpenWeatherProvider(String apiKeyLocation) {
         this.apiKey = readApiKey(apiKeyLocation);
