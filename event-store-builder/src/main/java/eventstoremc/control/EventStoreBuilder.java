@@ -1,6 +1,7 @@
 package eventstoremc.control;
 
 import com.google.gson.Gson;
+import java.io.BufferedWriter;
 import com.google.gson.GsonBuilder;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import predictionprovidermc.model.Weather;
@@ -68,9 +69,10 @@ public class EventStoreBuilder {
 
         createDirectories(eventStorePath);
 
-        try (FileWriter fileWriter = new FileWriter(eventStorePath, true)) {
-            fileWriter.write(jsonEvent);
-            fileWriter.write("\n");
+        try (FileWriter fileWriter = new FileWriter(eventStorePath, true);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+
+            bufferedWriter.write(jsonEvent.replaceAll("\\n|\\r", "") + "\n");
         }
     }
 
