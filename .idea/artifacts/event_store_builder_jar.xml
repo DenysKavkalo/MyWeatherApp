@@ -5,7 +5,7 @@
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
-      <element id="module-output" name="event-store-builder" />
+      <element id="module-output" name="datalake-builder" />
       <element id="module-output" name="prediction-provider" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/activemq/activemq-client/5.15.12/activemq-client-5.15.12.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jsoup/jsoup/1.16.2/jsoup-1.16.2.jar" path-in-jar="/" />

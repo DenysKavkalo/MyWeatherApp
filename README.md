@@ -62,7 +62,7 @@ Copy and paste the following lines in the correspondent terminal.
 - **Lines for the event-store-builder terminal:**
 
 cd .\MyWeatherApp-events_branch\out\artifacts\event_store_builder_jar\
-java -cp .\event-store-builder.jar eventstoremc.Main prediction.Weather eventstore
+java -cp .\event-store-builder.jar datalakemc.Main prediction.Weather eventstore
 
 - **Lines for the prediction-provider terminal:**
 
