@@ -22,21 +22,16 @@ public class XoteloHotelProvider implements HotelProvider {
         String url = buildURL(hotel.key(), checkIn, checkOut);
         try {
             String jsonResponse = obtainJSON(url);
-
             JsonObject jsonObject = new Gson().fromJson(jsonResponse, JsonObject.class);
 
-            // Verificar si el campo "rates" está presente y no es un arreglo vacío
             if (jsonObject.getAsJsonObject("result").has("rates")) {
                 JsonArray ratesArray = jsonObject.getAsJsonObject("result").getAsJsonArray("rates");
 
-                // Verificar si el arreglo "rates" no está vacío
                 if (!ratesArray.isJsonNull() && ratesArray.size() > 0) {
                     String chkIn = jsonObject.getAsJsonObject("result").get("chk_in").getAsString();
                     String chkOut = jsonObject.getAsJsonObject("result").get("chk_out").getAsString();
                     long timestamp = jsonObject.get("timestamp").getAsLong();
-
                     Instant ts = Instant.ofEpochMilli(timestamp);
-
                     ArrayList<Rate> rates = new ArrayList<>();
 
                     for (int i = 0; i < ratesArray.size(); i++) {
@@ -45,14 +40,11 @@ public class XoteloHotelProvider implements HotelProvider {
                         String name = rateObject.get("name").getAsString();
                         Float rate = rateObject.get("rate").getAsFloat();
                         Float tax = rateObject.get("tax").getAsFloat();
-
                         rates.add(new Rate(code, name, rate, tax));
                     }
-
                     return new Booking(hotel, chkIn, chkOut, rates, ts, ss);
                 }
             }
-
             return null;
         } catch (IOException e) {
             e.printStackTrace();

@@ -76,10 +76,8 @@ public class HotelController {
             LocalTime noon = LocalTime.of(12, 0);
 
             for (Hotel hotel : hotels) {
-
                 Instant mediodia = now.truncatedTo(ChronoUnit.DAYS).plus(noon.getHour(), ChronoUnit.HOURS);
                 int numDaysToAdd = (now.toEpochMilli() < mediodia.toEpochMilli()) ? 0 : 1;
-
                 LocalDate checkIn = LocalDate.now();
                 checkIn = checkIn.plusDays(numDaysToAdd);
 

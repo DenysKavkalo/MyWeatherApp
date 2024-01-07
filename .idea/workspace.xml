@@ -9,27 +9,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="57777aa1-4213-4bae-b536-210a479dc270" name="Changes" comment="Fixed logic of EventStoreBuilder class">
-      <change afterPath="$PROJECT_DIR$/booking-provider/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/control/HotelController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/control/HotelProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/control/HotelPublisher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/control/HotelStorage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/control/XoteloHotelProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/model/Booking.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/model/Hotel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/model/Rate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weather-driven-booking-engine/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/event_store_builder_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/event_store_builder_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="57777aa1-4213-4bae-b536-210a479dc270" name="Changes" comment="Created booking provider module and updated data lake builder">
+      <change afterPath="$PROJECT_DIR$/weather-driven-booking-engine/src/main/java/businessmvc/control/BusinessController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weather-driven-booking-engine/src/main/java/businessmvc/control/DataSubscriber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weather-driven-booking-engine/src/main/java/businessmvc/model/ResponseToUserPetition.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weather-driven-booking-engine/src/main/java/businessmvc/model/WeatherBooking.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weather-driven-booking-engine/src/main/java/businessmvc/view/UserInteraction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-store-builder/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/datalake-builder/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-store-builder/src/main/java/eventstoremc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/datalake-builder/src/main/java/datalakemc/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/event-store-builder/src/main/java/eventstoremc/control/EventStoreBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/datalake-builder/src/main/java/datalakemc/control/DatalakeBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/control/HotelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/control/HotelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/control/HotelPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/control/HotelPublisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/control/XoteloHotelProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/booking-provider/src/main/java/bookingprovidermc/control/XoteloHotelProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/control/OpenWeatherProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/control/OpenWeatherProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/control/WeatherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/prediction-provider/src/main/java/predictionprovidermc/control/WeatherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather-driven-booking-engine/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/weather-driven-booking-engine/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather-driven-booking-engine/src/main/java/businessmvc/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/weather-driven-booking-engine/src/main/java/businessmvc/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,9 +35,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Record" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -94,6 +87,7 @@
     &quot;Application.MainDatalakeBuilder.executor&quot;: &quot;Run&quot;,
     &quot;Application.MainEventStore.executor&quot;: &quot;Run&quot;,
     &quot;Application.MainProvider.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainWDBE.executor&quot;: &quot;Run&quot;,
     &quot;Application.MainWeatherProvider.executor&quot;: &quot;Run&quot;,
     &quot;Application.Publisher.executor&quot;: &quot;Run&quot;,
     &quot;Application.Subscriber.executor&quot;: &quot;Run&quot;,
@@ -122,7 +116,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Usuario/IdeaProjects/MyWeatherApp/booking-provider/src/main/java/bookingprovidermc&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Usuario/IdeaProjects/Proyectos DACD/kata_streams&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.34827587&quot;,
@@ -170,7 +164,9 @@
     <configuration name="MainWDBE" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="businessmvc.Main" />
       <module name="weather-driven-booking-engine" />
+      <option name="PROGRAM_PARAMETERS" value="prediction.Weather booking.Hotel" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/weather-driven-booking-engine/src/main/java/businessmvc" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -288,7 +284,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702833272050</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Created booking provider module and updated data lake builder">
+      <option name="closed" value="true" />
+      <created>1704475477178</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1704475477178</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -302,7 +306,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="events_branch" />
+                        <option value="origin/final_project_branch" />
                       </list>
                     </value>
                   </entry>
@@ -323,7 +327,8 @@
     <MESSAGE value="Updated pom" />
     <MESSAGE value="Generated jar" />
     <MESSAGE value="Fixed logic of EventStoreBuilder class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed logic of EventStoreBuilder class" />
+    <MESSAGE value="Created booking provider module and updated data lake builder" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created booking provider module and updated data lake builder" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

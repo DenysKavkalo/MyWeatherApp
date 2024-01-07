@@ -25,7 +25,7 @@ public class WeatherController {
         this.weatherStorage = weatherStorage;
     }
 
-    public static ArrayList<Location> loadLocationsFromFile(String filePath) {
+    public ArrayList<Location> loadLocationsFromFile(String filePath) {
         ArrayList<Location> locationList = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;

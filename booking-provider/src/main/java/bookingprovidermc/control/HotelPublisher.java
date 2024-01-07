@@ -21,22 +21,15 @@ public class HotelPublisher implements HotelStorage{
                     .create();
 
             String jsonHotel = gson.toJson(booking);
-
             System.out.println("Booking JSON: \n" + jsonHotel);
-
             ConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
             Connection connection = connectionFactory.createConnection();
             connection.start();
-
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             Topic topic = session.createTopic(topicName);
-
             MessageProducer producer = session.createProducer(topic);
-
             TextMessage message = session.createTextMessage(jsonHotel);
-
             producer.send(message);
-
             session.close();
             connection.close();
         } catch (Exception e) {
