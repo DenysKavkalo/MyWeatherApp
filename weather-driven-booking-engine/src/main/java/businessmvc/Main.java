@@ -22,6 +22,7 @@ public class Main {
             userInteraction.getUserInput();
             businessController.generateResponses(userInteraction.getCheckIn(), userInteraction.getCheckOut());
             userInteraction.printResponses(businessController.getResponses());
+            businessController.clearResponses();
         }
     }
 }

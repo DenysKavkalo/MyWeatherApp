@@ -33,6 +33,10 @@ public class BusinessController {
         bookingList.add(booking);
     }
 
+    public synchronized void clearResponses() {
+        responses.clear();
+    }
+
     public synchronized void processAndStoreData() {
         for (Weather weather : weatherList) {
             for (Booking booking : bookingList) {
@@ -87,7 +91,7 @@ public class BusinessController {
         return smallestRate.orElse(0.0f);
     }
 
-    public void generateResponses(String checkIn, String checkOut) {
+    public synchronized void generateResponses(String checkIn, String checkOut) {
         List<WeatherBooking> filteredBookings = dataMart.stream()
                 .filter(booking -> booking.checkIn().compareTo(checkIn) >= 0
                         && booking.checkOut().compareTo(checkOut) <= 0)

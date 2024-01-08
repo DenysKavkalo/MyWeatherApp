@@ -28,20 +28,16 @@ public class UserInteraction {
 
     public void printResponses(List<ResponseToUserPetition> responses) {
         if (responses.isEmpty()) {
-            System.out.println("No results found");
+            System.out.println("No results found.");
         } else {
             for (ResponseToUserPetition response : responses) {
-                System.out.println("Hotel: " + response.hotel());
-                System.out.println("Destination: " + response.island());
-                System.out.println("Check-in date: " + response.checkIn());
-                System.out.println("Check-out date: " + response.checkOut());
-                System.out.println("Final price: " + response.totalRate() + "€");
-                System.out.println("Mean temperature: " + response.meanTemp() + "ºC");
-                System.out.println("Mean probability of precipitation: " + response.meanRain());
-                System.out.println("Mean humidity: " + response.meanHumidity() + "%");
-                System.out.println("Mean clouds: " + response.meanClouds() + "%");
-                System.out.println("Mean wind speed: " + response.meanWindSpeed() + "m/s");
-                System.out.println();
+                System.out.printf("Hotel: %s%nDestination: %s%nCheck-in date: %s%nCheck-out date: " +
+                                "%s%nFinal price: %.2f€%nMean temperature: %.2fºC%nMean " +
+                                "probability of precipitation: %.2f%nMean " +
+                                "humidity: %.2f%%%nMean clouds: %.2f%%%nMean wind speed: %.2fm/s%n%n",
+                        response.hotel(), response.island(), response.checkIn(), response.checkOut(),
+                        response.totalRate(), response.meanTemp(), response.meanRain(), response.meanHumidity(),
+                        response.meanClouds(), response.meanWindSpeed());
             }
         }
     }
