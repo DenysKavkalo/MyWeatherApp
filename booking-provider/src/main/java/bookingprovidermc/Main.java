@@ -4,13 +4,11 @@ import bookingprovidermc.control.*;
 
 public class Main {
     public static void main(String[] args) {
-        String hotelsLocation = args[0];
-        String topicName = args[1];
 
         HotelProvider hotelProvider = new XoteloHotelProvider();
-        HotelStorage hotelStorage = new HotelPublisher(topicName);
+        HotelStorage hotelStorage = new HotelPublisher(args[1]);
 
-        HotelController controller = new HotelController(hotelProvider, hotelStorage, hotelsLocation);
+        HotelController controller = new HotelController(hotelProvider, hotelStorage, args[0]);
         controller.configure(5, 6);
         controller.execute();
 

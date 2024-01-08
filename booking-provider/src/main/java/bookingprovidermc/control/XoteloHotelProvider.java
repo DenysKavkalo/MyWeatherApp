@@ -3,11 +3,13 @@ package bookingprovidermc.control;
 import bookingprovidermc.model.Booking;
 import bookingprovidermc.model.Hotel;
 import bookingprovidermc.model.Rate;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -22,28 +24,39 @@ public class XoteloHotelProvider implements HotelProvider {
         String url = buildURL(hotel.key(), checkIn, checkOut);
         try {
             String jsonResponse = obtainJSON(url);
-            JsonObject jsonObject = new Gson().fromJson(jsonResponse, JsonObject.class);
 
-            if (jsonObject.getAsJsonObject("result").has("rates")) {
-                JsonArray ratesArray = jsonObject.getAsJsonObject("result").getAsJsonArray("rates");
+            if (jsonResponse != null && !jsonResponse.isEmpty()) {
+                JsonElement jsonElement = JsonParser.parseString(jsonResponse);
 
-                if (!ratesArray.isJsonNull() && ratesArray.size() > 0) {
-                    String chkIn = jsonObject.getAsJsonObject("result").get("chk_in").getAsString();
-                    String chkOut = jsonObject.getAsJsonObject("result").get("chk_out").getAsString();
-                    long timestamp = jsonObject.get("timestamp").getAsLong();
-                    Instant ts = Instant.ofEpochMilli(timestamp);
-                    ArrayList<Rate> rates = new ArrayList<>();
+                if (jsonElement.isJsonObject()) {
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-                    for (int i = 0; i < ratesArray.size(); i++) {
-                        JsonObject rateObject = ratesArray.get(i).getAsJsonObject();
-                        String code = rateObject.get("code").getAsString();
-                        String name = rateObject.get("name").getAsString();
-                        Float rate = rateObject.get("rate").getAsFloat();
-                        Float tax = rateObject.get("tax").getAsFloat();
-                        rates.add(new Rate(code, name, rate, tax));
+                    if (jsonObject.getAsJsonObject("result").has("rates")) {
+                        JsonArray ratesArray = jsonObject.getAsJsonObject("result").getAsJsonArray("rates");
+
+                        if (!ratesArray.isJsonNull() && ratesArray.size() > 0) {
+                            String chkIn = jsonObject.getAsJsonObject("result").get("chk_in").getAsString();
+                            String chkOut = jsonObject.getAsJsonObject("result").get("chk_out").getAsString();
+                            long timestamp = jsonObject.get("timestamp").getAsLong();
+                            Instant ts = Instant.ofEpochMilli(timestamp);
+                            ArrayList<Rate> rates = new ArrayList<>();
+
+                            for (int i = 0; i < ratesArray.size(); i++) {
+                                JsonObject rateObject = ratesArray.get(i).getAsJsonObject();
+                                String code = rateObject.get("code").getAsString();
+                                String name = rateObject.get("name").getAsString();
+                                Float rate = rateObject.get("rate").getAsFloat();
+                                Float tax = rateObject.get("tax").getAsFloat();
+                                rates.add(new Rate(code, name, rate, tax));
+                            }
+                            return new Booking(hotel, chkIn, chkOut, rates, ts, ss);
+                        }
                     }
-                    return new Booking(hotel, chkIn, chkOut, rates, ts, ss);
+                } else {
+                    System.out.println("The response is not a valid JSON object");
                 }
+            } else {
+                System.out.println("The response from the web service is null or empty.");
             }
             return null;
         } catch (IOException e) {
