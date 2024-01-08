@@ -4,7 +4,6 @@ import businessmvc.control.BusinessController;
 import businessmvc.control.DataSubscriber;
 import businessmvc.view.UserInteraction;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
