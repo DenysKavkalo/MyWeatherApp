@@ -8,6 +8,7 @@ import predictionprovidermc.model.Location;
 import predictionprovidermc.model.Weather;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -30,34 +31,10 @@ public class OpenWeatherProvider implements WeatherProvider {
         try {
             String json = obtainJSON(url);
             Instant ts = Instant.now();
-
-            JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
-            JsonArray listArray = jsonObject.getAsJsonArray("list");
-
-            JsonObject matchingObject = null;
-            long targetEpoch = instant.getEpochSecond();
-
-            for (JsonElement element : listArray) {
-                JsonObject item = element.getAsJsonObject();
-                long itemEpoch = item.get("dt").getAsLong();
-                if (itemEpoch == targetEpoch) {
-                    matchingObject = item;
-                    break;
-                }
-            }
+            JsonObject matchingObject = findMatchingJsonObject(json, instant.getEpochSecond());
 
             if (matchingObject != null) {
-                JsonObject mainObject = matchingObject.getAsJsonObject("main");
-                JsonObject cloudsObject = matchingObject.getAsJsonObject("clouds");
-                JsonObject windObject = matchingObject.getAsJsonObject("wind");
-
-                Float temp = mainObject.get("temp").getAsFloat();
-                Float rain = matchingObject.get("pop").getAsFloat();
-                Integer humidity = mainObject.get("humidity").getAsInt();
-                Integer clouds = cloudsObject.get("all").getAsInt();
-                Float windSpeed = windObject.get("speed").getAsFloat();
-
-                return new Weather(temp, rain, humidity, clouds, windSpeed, location, instant, ts, ss);
+                return createWeatherObject(matchingObject, location, instant, ts);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,6 +57,34 @@ public class OpenWeatherProvider implements WeatherProvider {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    private JsonObject findMatchingJsonObject(String json, long targetEpoch) {
+        JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+        JsonArray listArray = jsonObject.getAsJsonArray("list");
+
+        for (JsonElement element : listArray) {
+            JsonObject item = element.getAsJsonObject();
+            long itemEpoch = item.get("dt").getAsLong();
+            if (itemEpoch == targetEpoch) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    private Weather createWeatherObject(JsonObject matchingObject, Location location, Instant instant, Instant ts) {
+        JsonObject mainObject = matchingObject.getAsJsonObject("main");
+        JsonObject cloudsObject = matchingObject.getAsJsonObject("clouds");
+        JsonObject windObject = matchingObject.getAsJsonObject("wind");
+
+        Float temp = mainObject.get("temp").getAsFloat();
+        Float rain = matchingObject.get("pop").getAsFloat();
+        Integer humidity = mainObject.get("humidity").getAsInt();
+        Integer clouds = cloudsObject.get("all").getAsInt();
+        Float windSpeed = windObject.get("speed").getAsFloat();
+
+        return new Weather(temp, rain, humidity, clouds, windSpeed, location, instant, ts, ss);
     }
 
     private String readApiKey(String apiKeyLocation) {

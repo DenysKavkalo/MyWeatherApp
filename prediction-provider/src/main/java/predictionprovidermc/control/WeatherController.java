@@ -38,7 +38,7 @@ public class WeatherController {
                     Location location = new Location(name, latitude, longitude);
                     locationList.add(location);
                 } else {
-                    System.err.println("La línea no tiene suficientes partes: " + line);
+                    System.err.println("The line does not have enough parts: " + line);
                 }
             }
         } catch (IOException | NumberFormatException e) {
