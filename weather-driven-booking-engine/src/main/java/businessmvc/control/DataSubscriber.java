@@ -185,18 +185,25 @@ public class DataSubscriber {
     }
 
     private void startConsumer(TopicConnection connection) {
-        Thread consumerThread = new Thread(() -> {
-            try {
-                connection.start();
-                while (!terminate) {
+        try {
+            connection.start();
+
+            Thread consumerThread = new Thread(() -> {
+                try {
+                    latch.await();
+
+                    while (!terminate) {
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    latch.countDown();
                 }
-            } catch (JMSException e) {
-                e.printStackTrace();
-            } finally {
-                latch.countDown();
-            }
-        });
-        consumerThread.start();
+            });
+            consumerThread.start();
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -43,18 +43,25 @@ public class XoteloHotelProvider implements HotelProvider {
         if (jsonElement.isJsonObject()) {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.getAsJsonObject("result").has("rates")) {
-                JsonArray ratesArray = jsonObject.getAsJsonObject("result").getAsJsonArray("rates");
+            if (jsonObject.has("result") &&
+                    jsonObject.getAsJsonObject("result").has("rates")) {
+                JsonArray ratesArray =
+                        jsonObject.getAsJsonObject("result").getAsJsonArray("rates");
 
-                if (!ratesArray.isJsonNull() && ratesArray.size() > 0) {
+                if (ratesArray != null && ratesArray.size() > 0) {
                     return createBookingFromJson(jsonObject, hotel, ratesArray);
+                } else {
+                    System.out.println("The 'rates' array is null or empty.");
                 }
+            } else {
+                System.out.println("The 'result' object or 'rates' array is missing in the JSON structure.");
             }
         } else {
             System.out.println("The response is not a valid JSON object");
         }
         return null;
     }
+
 
     private Booking createBookingFromJson(JsonObject jsonObject, Hotel hotel, JsonArray ratesArray) {
         String chkIn = jsonObject.getAsJsonObject("result").get("chk_in").getAsString();
