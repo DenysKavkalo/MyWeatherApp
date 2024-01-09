@@ -93,18 +93,23 @@ public class BusinessController {
         );
     }
 
-    public synchronized void generateResponses(String checkIn, String checkOut) {
-        List<WeatherBooking> filteredBookings = filterBookings(checkIn, checkOut);
+    public synchronized void generateResponses(String checkIn, String checkOut, Float minDesiredTemp,
+                                               Float maxDesiredTemp) {
+        List<WeatherBooking> filteredBookings = filterBookings(checkIn, checkOut, minDesiredTemp, maxDesiredTemp);
 
-        Map<String, Map<String, List<WeatherBooking>>> groupedBookings = groupBookingsByHotelAndIsland(filteredBookings);
+        Map<String, Map<String, List<WeatherBooking>>> groupedBookings =
+                groupBookingsByHotelAndIsland(filteredBookings);
 
-        processGroupedBookings(checkIn, checkOut, groupedBookings);
+        processGroupedBookings(checkIn, checkOut, minDesiredTemp, maxDesiredTemp, groupedBookings);
     }
 
-    private List<WeatherBooking> filterBookings(String checkIn, String checkOut) {
+    private List<WeatherBooking> filterBookings(String checkIn, String checkOut, Float minDesiredTemp,
+                                                Float maxDesiredTemp) {
         return dataMart.stream()
                 .filter(booking -> booking.checkIn().compareTo(checkIn) >= 0
-                        && booking.checkOut().compareTo(checkOut) <= 0)
+                        && booking.checkOut().compareTo(checkOut) <= 0
+                        && booking.temp() >= minDesiredTemp
+                        && booking.temp() <= maxDesiredTemp)
                 .collect(Collectors.toList());
     }
 
@@ -112,28 +117,52 @@ public class BusinessController {
             List<WeatherBooking>>> groupBookingsByHotelAndIsland(List<WeatherBooking> filteredBookings) {
         return filteredBookings.stream()
                 .collect(Collectors.groupingBy(WeatherBooking::hotel,
-                        Collectors.groupingBy(WeatherBooking::island)));
+                        Collectors.groupingBy(WeatherBooking::island,
+                                Collectors.toList())));
     }
 
-    private void processGroupedBookings(String checkIn, String checkOut, Map<String, Map<String,
-            List<WeatherBooking>>> groupedBookings) {
+
+    private void processGroupedBookings(String checkIn, String checkOut, Float minDesiredTemp, Float maxDesiredTemp,
+                                        Map<String, Map<String, List<WeatherBooking>>> groupedBookings) {
         for (Map.Entry<String, Map<String, List<WeatherBooking>>> entry : groupedBookings.entrySet()) {
             String hotel = entry.getKey();
             Map<String, List<WeatherBooking>> islandBookings = entry.getValue();
-            processIslandBookings(checkIn, checkOut, hotel, islandBookings);
+            processIslandBookings(checkIn, checkOut, minDesiredTemp, maxDesiredTemp, hotel, islandBookings);
         }
     }
 
-    private void processIslandBookings(String checkIn, String checkOut, String hotel, Map<String,
-            List<WeatherBooking>> islandBookings) {
+    private void processIslandBookings(String checkIn, String checkOut, Float minDesiredTemp, Float maxDesiredTemp,
+                                       String hotel, Map<String, List<WeatherBooking>> islandBookings) {
         islandBookings.forEach((island, bookings) -> {
             boolean allDaysCovered = areAllDaysCovered(checkIn, checkOut, bookings);
 
             if (allDaysCovered) {
-                ResponseToUserPetition response = generateResponse(checkIn, checkOut, hotel, island, bookings);
-                responses.add(response);
+                ResponseToUserPetition response = generateResponse(checkIn, checkOut, minDesiredTemp, maxDesiredTemp,
+                        hotel, island, bookings);
+                if (response != null) {
+                    responses.add(response);
+                }
             }
         });
+    }
+
+
+    private ResponseToUserPetition generateResponse(String checkIn, String checkOut, Float minDesiredTemp,
+                                                    Float maxDesiredTemp, String hotel, String island,
+                                                    List<WeatherBooking> bookings) {
+        float totalRate = calculateTotalRate(bookings);
+        float meanTemp = calculateMeanValue(bookings, WeatherBooking::temp);
+        float meanRain = calculateMeanValue(bookings, WeatherBooking::rain);
+        float meanHumidity = calculateMeanValue(bookings, WeatherBooking::humidity);
+        float meanClouds = calculateMeanValue(bookings, WeatherBooking::clouds);
+        float meanWindSpeed = calculateMeanValue(bookings, WeatherBooking::windSpeed);
+
+        if (meanTemp >= minDesiredTemp && meanTemp <= maxDesiredTemp) {
+            return new ResponseToUserPetition(hotel, island, checkIn, checkOut,
+                    totalRate, meanTemp, meanRain, meanHumidity, meanClouds, meanWindSpeed);
+        } else {
+            return null;
+        }
     }
 
     private boolean areAllDaysCovered(String checkIn, String checkOut, List<WeatherBooking> bookings) {
@@ -148,19 +177,6 @@ public class BusinessController {
             startDate = startDate.plusDays(1);
         }
         return true;
-    }
-
-    private ResponseToUserPetition generateResponse(String checkIn, String checkOut, String hotel, String island,
-                                                    List<WeatherBooking> bookings) {
-        float totalRate = calculateTotalRate(bookings);
-        float meanTemp = calculateMeanValue(bookings, WeatherBooking::temp);
-        float meanRain = calculateMeanValue(bookings, WeatherBooking::rain);
-        float meanHumidity = calculateMeanValue(bookings, WeatherBooking::humidity);
-        float meanClouds = calculateMeanValue(bookings, WeatherBooking::clouds);
-        float meanWindSpeed = calculateMeanValue(bookings, WeatherBooking::windSpeed);
-
-        return new ResponseToUserPetition(hotel, island, checkIn, checkOut,
-                totalRate, meanTemp, meanRain, meanHumidity, meanClouds, meanWindSpeed);
     }
 
     private float calculateTotalRate(List<WeatherBooking> bookings) {

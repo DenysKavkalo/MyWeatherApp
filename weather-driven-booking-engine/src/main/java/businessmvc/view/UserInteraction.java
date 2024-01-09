@@ -11,6 +11,8 @@ public class UserInteraction {
 
     private String checkIn;
     private String checkOut;
+    private Float minDesiredMeanTemperature;
+    private Float maxDesiredMeanTemperature;
 
     public String getCheckIn() {
         return checkIn;
@@ -20,10 +22,19 @@ public class UserInteraction {
         return checkOut;
     }
 
+    public Float getMinDesiredMeanTemperature() {
+        return minDesiredMeanTemperature;
+    }
+
+    public Float getMaxDesiredMeanTemperature() {
+        return maxDesiredMeanTemperature;
+    }
+
     public void getUserInput() {
         Scanner scanner = new Scanner(System.in);
         boolean validCheckIn = false;
         boolean validCheckOut = false;
+        boolean validTemperatureRange = false;
 
         while (!validCheckIn) {
             System.out.println("Enter the date of the check-in in this format, YYYY-MM-DD:");
@@ -45,6 +56,33 @@ public class UserInteraction {
             }
         }
 
+        while (!validTemperatureRange) {
+            System.out.println(
+                    "Enter the desired mean temperature range (min and max, can be integers or decimal numbers):");
+
+            // Input for minimum temperature
+            System.out.print("Minimum temperature: ");
+            String minTemperatureInput = scanner.nextLine();
+
+            // Input for maximum temperature
+            System.out.print("Maximum temperature: ");
+            String maxTemperatureInput = scanner.nextLine();
+
+            try {
+                minDesiredMeanTemperature = Float.parseFloat(minTemperatureInput);
+                maxDesiredMeanTemperature = Float.parseFloat(maxTemperatureInput);
+
+                if (minDesiredMeanTemperature <= maxDesiredMeanTemperature) {
+                    validTemperatureRange = true;
+                } else {
+                    System.out.println("Invalid temperature range.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println(
+                        "Invalid input. Please enter valid decimal or integer numbers for the temperature range.");
+            }
+        }
+
         System.out.println("Searching for results...\n");
     }
 
@@ -56,7 +94,6 @@ public class UserInteraction {
             return false;
         }
     }
-
 
     public void printResponses(List<ResponseToUserPetition> responses) {
         if (responses.isEmpty()) {
@@ -73,5 +110,4 @@ public class UserInteraction {
             }
         }
     }
-
 }
